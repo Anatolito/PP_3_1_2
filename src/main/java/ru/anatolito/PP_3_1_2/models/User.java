@@ -1,7 +1,8 @@
 package ru.anatolito.PP_3_1_2.models;
 
+import javax.persistence.*;
 
-import jakarta.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -12,10 +13,10 @@ public class User {
     @Column(name = "id")
     private int userId;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 30)
     private String userName;
 
-    @Column(name = "surname")
+    @Column(name = "surname", nullable = false, length = 30)
     private String userSurname;
 
     @Column(name = "age")
@@ -59,6 +60,19 @@ public class User {
 
     public void setUserSurname(String surname) {
         this.userSurname = surname;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId && userAge == user.userAge && Objects.equals(userName, user.userName) && Objects.equals(userSurname, user.userSurname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, userName, userSurname, userAge);
     }
 
     @Override

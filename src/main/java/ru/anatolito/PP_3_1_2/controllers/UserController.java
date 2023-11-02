@@ -8,6 +8,7 @@ import ru.anatolito.PP_3_1_2.models.User;
 import ru.anatolito.PP_3_1_2.services.UserService;
 
 
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping(value = "users/saveUser")
-    public String createUser(@ModelAttribute("user") User user) {
+    public String createUser(@ModelAttribute("user")  User user) {
         userService.saveUser(user);
         return redirect;
     }
@@ -44,7 +45,6 @@ public class UserController {
         model.addAttribute("newUser", user);
         return "userInfo";
     }
-
     @GetMapping(value = "/deleteUser")
     public String deleteUser(@RequestParam("userId") int id) {
         userService.deleteUser(id);

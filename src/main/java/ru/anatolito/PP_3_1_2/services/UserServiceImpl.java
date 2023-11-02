@@ -1,50 +1,43 @@
-package ru.anatolito.PP_3_1_2.service;
+package ru.anatolito.PP_3_1_2.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.anatolito.PP_3_1_2.dao.UserDao;
 import ru.anatolito.PP_3_1_2.models.User;
-import ru.anatolito.PP_3_1_2.repositories.UserRepository;
-import ru.anatolito.PP_3_1_2.services.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserDao userDao;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userDao.getAllUsers();
     }
 
     @Override
     public User getUser(int id) {
-        User user = null;
-        Optional<User> optional = userRepository.findById(id);
-        if (optional.isPresent()) {
-            user = optional.get();
-        }
-        return user;
+        return userDao.getUser(id);
     }
 
     @Transactional
     @Override
     public void saveUser(User user) {
-        userRepository.save(user);
+        userDao.saveUser(user);
     }
 
     @Transactional
     @Override
     public void deleteUser(int id) {
-        userRepository.deleteById(id);
+        userDao.deleteUser(id);
     }
 }
