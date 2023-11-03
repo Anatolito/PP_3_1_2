@@ -1,6 +1,7 @@
 package ru.anatolito.PP_3_1_2.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.util.Objects;
 
@@ -13,12 +14,17 @@ public class User {
     @Column(name = "id")
     private int userId;
 
-    @Column(name = "name", nullable = false, length = 30)
+    @NotBlank(message = "Name should not be empty")
+    @Size(min = 1, max = 30, message = "Name should be between 1 and 30 characters")
+    @Column(name = "name", nullable = false)
     private String userName;
 
-    @Column(name = "surname", nullable = false, length = 30)
+    @NotBlank(message = "Surname should not be empty")
+    @Size(min = 1, max = 30, message = "Surname should be between 1 and 30 characters")
+    @Column(name = "surname", nullable = false)
     private String userSurname;
 
+    @Min(value = 0, message = "Age should be greater than or equal 0")
     @Column(name = "age")
     private int userAge;
 
